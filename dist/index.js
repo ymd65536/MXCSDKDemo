@@ -1,21 +1,22 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const mxc_sdk_1 = require("@microsoft/mxc-sdk");
-if (!(0, mxc_sdk_1.getPlatformSupport)().isSupported) {
+import { spawnSandboxFromConfig, createConfigFromPolicy, getAvailableToolsPolicy, getTemporaryFilesPolicy, getPlatformSupport, } from '@microsoft/mxc-sdk';
+import os from 'node:os';
+if (!getPlatformSupport().isSupported) {
     throw new Error('MXC not available on this host');
 }
-const tools = (0, mxc_sdk_1.getAvailableToolsPolicy)(process.env);
-const temp = (0, mxc_sdk_1.getTemporaryFilesPolicy)();
-const config = (0, mxc_sdk_1.createConfigFromPolicy)({
+const tools = getAvailableToolsPolicy(process.env);
+const temp = getTemporaryFilesPolicy();
+const userHome = os.homedir();
+const config = createConfigFromPolicy({
     version: '0.7.0-alpha',
     filesystem: {
-        readonlyPaths: tools.readonlyPaths,
-        readwritePaths: temp.readwritePaths,
+        readonlyPaths: [userHome],
+        readwritePaths: [userHome],
     },
     network: { allowOutbound: false },
     timeoutMs: 30_000,
 });
-config.process.commandLine = 'python -c "print(\'hello from sandbox\')"';
-const child = (0, mxc_sdk_1.spawnSandboxFromConfig)(config, { usePty: false });
+config.process.env = ["MY_VAR=hello world"];
+config.process.commandLine = `date;date`;
+const child = spawnSandboxFromConfig(config, { usePty: false });
 child.stdout.on('data', (d) => process.stdout.write(d));
 child.on('close', (code) => console.log('exit:', code));

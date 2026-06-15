@@ -21,11 +21,11 @@ const config = createConfigFromPolicy({
     readonlyPaths: [userHome],
     readwritePaths: [userHome],
   },
-  network: { allowOutbound: false },
+  network: { allowOutbound: true },
   timeoutMs: 30_000,
 });
 config.process!.env = ["MY_VAR=hello world"];
-config.process!.commandLine = `date;env;echo \"\";echo $MY_VAR;date`;
+config.process!.commandLine = `date;curl http://localhost:3000/health -v;echo \"\";date`;
 
 const child = spawnSandboxFromConfig(config, { usePty: false });
 child.stdout!.on('data', (d) => process.stdout.write(d));
