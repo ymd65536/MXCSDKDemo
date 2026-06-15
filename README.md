@@ -1,4 +1,21 @@
-# TypeScript Quick Start
+# MXC Quick Start
+
+## はじめに
+
+このドキュメントはMicrosoft eXecution Container (MXC)のSDKを実行するためのTypeScriptプロジェクトです。
+
+## 実行方法
+
+- npm run dev
+  - tsx を使って、src/index.ts を型チェックなしで超高速に直接実行します。開発中の動作確認はすべてこれで行います。
+
+- npm run build
+  - TypeScript公式のコンパイラ（tsc）を使い、プロジェクト全体の厳密な型チェックを行い、本番用のJavaScriptファイルを dist ディレクトリに出力します。
+
+- npm start
+  - ビルドされた純粋なJavaScriptファイル（dist/index.js）を、Node.jsネイティブで実行します。本番環境（サーバー上など）ではこのコマンドを叩きます。
+
+## TypeScriptプロジェクトのセットアップ手順
 
 ## 1. プロジェクトの初期化
 
