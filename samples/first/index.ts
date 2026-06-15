@@ -22,6 +22,8 @@ const config = createConfigFromPolicy({
 });
 config.process!.commandLine = 'python3 --version;which python3;uname -m';
 
+console.log('Spawning sandbox with config:', JSON.stringify(config, null, 2));
+
 const child = spawnSandboxFromConfig(config, { usePty: false });
 child.stdout!.on('data', (d) => process.stdout.write(d));
 child.on('close', (code) => console.log('exit:', code));

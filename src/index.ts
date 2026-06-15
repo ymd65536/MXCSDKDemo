@@ -10,9 +10,6 @@ if (!getPlatformSupport().isSupported) {
   throw new Error('MXC not available on this host');
 }
 
-const tools = getAvailableToolsPolicy(process.env);
-const temp  = getTemporaryFilesPolicy();
-
 const userHome = os.homedir();
 
 const config = createConfigFromPolicy({
