@@ -14,3 +14,6 @@ include
 
 # node.js
 node_modules
+
+# MXC Demo
+sample.log
