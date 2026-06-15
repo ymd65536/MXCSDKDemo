@@ -20,7 +20,7 @@ const config = createConfigFromPolicy({
   network: { allowOutbound: false },
   timeoutMs: 30_000,
 });
-config.process!.commandLine = 'python3 -c "print(\'hello from sandbox\')"';
+config.process!.commandLine = 'python3 --version;which python3;uname -m';
 
 const child = spawnSandboxFromConfig(config, { usePty: false });
 child.stdout!.on('data', (d) => process.stdout.write(d));
